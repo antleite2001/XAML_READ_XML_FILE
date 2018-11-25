@@ -1,0 +1,30 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="DataBindingWPF.Control"
+    Title="DataBindingWPF" Height="300" Width="300"
+    >
+
+	<StackPanel>
+		<TextBlock Width="248" Height="24" Text="Colors:" TextWrapping="Wrap"/>
+		<ListBox x:Name="lbColor" Width="248" Height="56" IsSynchronizedWithCurrentItem="True">
+			<ListBoxItem Content="Blue"/>
+			<ListBoxItem Content="Green"/>
+			<ListBoxItem Content="Yellow"/>
+			<ListBoxItem Content="Red"/>
+			<ListBoxItem Content="Purple"/>
+			<ListBoxItem Content="Orange"/>
+		</ListBox>
+		<TextBlock Width="248" Height="24" Text="You selected color:" />
+		<TextBlock Width="248" Height="24" Text="{Binding ElementName=lbColor, Path=SelectedItem.Content, Mode=OneWay}" x:Name="tbSelectedBook" Background="{Binding ElementName=lbColor, Path=SelectedItem.Content, Mode=OneWay}"/>
+		<TextBox Width="248" Height="24" Text="{Binding ElementName=lbColor, Path=SelectedItem.Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="txtSelectedColor" Background="{Binding ElementName=lbColor, Path=SelectedItem.Content, Mode=OneWay}"/>
+		<TextBox Width="248" Height="24" Text="{Binding ElementName=lbColor, Path=SelectedItem.Content, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Background="{Binding ElementName=lbColor, Path=SelectedItem.Content, Mode=OneWay}"/>
+		<TextBox Width="248" Height="24" Text="{Binding ElementName=lbColor, Path=SelectedItem.Content, Mode=TwoWay, UpdateSourceTrigger=Explicit}" Background="{Binding ElementName=lbColor, Path=SelectedItem.Content, Mode=OneWay}"/>
+		<!--<TextBlock Width="248" Height="24">
+			<TextBlock.Text>
+				<Binding ElementName="lbColor" Path="SelectedItem.Content"/>
+			</TextBlock.Text>
+		</TextBlock>-->
+	</StackPanel>
+
+</Window>

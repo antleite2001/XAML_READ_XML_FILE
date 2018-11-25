@@ -1,0 +1,29 @@
+﻿<Window x:Class="DataBindingWPF.XmlBinding"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="DataBindingWPF" Height="300" Width="300"
+    >
+	<StackPanel>
+		<StackPanel.Resources>
+			<XmlDataProvider x:Key="Colors" Source="Colors.xml"  XPath="/colors"></XmlDataProvider>
+			<XmlDataProvider x:Key="MoreColors" XPath="/colors">
+				<x:XData>
+					<colors xmlns="">
+						<color name="pink" primary="true"/>
+						<color name="white" primary="false"/>
+						<color name="black" primary="true"/>
+						<color name="cyan" primary="false"/>
+						<color name="gray" primary="true"/>
+						<color name="magenta" primary="false"/>
+					</colors>
+				</x:XData>
+			</XmlDataProvider>
+		</StackPanel.Resources>
+		<TextBlock Width="248" Height="24" Text="Colors:" TextWrapping="Wrap"/>
+		<ListBox x:Name="lbColor" Width="248" Height="56" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding Source={StaticResource MoreColors}, XPath=color/@name}">
+		</ListBox>
+		<TextBlock Width="248" Height="24" Text="You selected color:" />
+		<TextBlock Width="248" Height="24" Text="{Binding ElementName=lbColor, Path=SelectedValue}" x:Name="tbSelectedColor"/>
+		<TextBox Width="248" Height="24" Text="{Binding ElementName=lbColor, Path=SelectedValue, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Background="{Binding ElementName=lbColor, Path=SelectedValue, Mode=OneWay}"/>
+	</StackPanel>
+</Window>

@@ -1,0 +1,58 @@
+﻿<Window x:Class="DataBindingWPF.XmlBinding"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="DataBindingWPF" 
+        Height="600" 
+        Width="600" 
+        WindowStartupLocation="CenterScreen"
+        Topmost="True" >
+	<StackPanel>
+		<StackPanel.Resources>
+            <XmlDataProvider 
+              x:Key="InventoryData" Source="Inventory.xml"  
+              XPath="Inventory/Books"></XmlDataProvider>
+        </StackPanel.Resources>
+		<TextBlock Width="248"
+                   Height="24" 
+                   Text="Books:" 
+                   TextWrapping="Wrap"/>
+        <ListBox x:Name="lbBook" 
+                 Width="Auto" 
+                 Height="200" 
+                 IsSynchronizedWithCurrentItem="True" >
+            <ListBox.ItemsSource>
+                <Binding
+                  Source="{StaticResource InventoryData}"
+                  XPath="*[@Stock='out'] | 
+                    *[@Number>=8 or @Number=3]"/>
+            </ListBox.ItemsSource>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock 
+                        FontSize="12" Foreground="Red">
+                        <TextBlock.Text>
+                            <Binding 
+                                XPath="Title"/>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            
+        </ListBox>
+		<TextBlock  
+            HorizontalAlignment="Left"
+            Width="248" 
+            Height="24" 
+            Text="You selected book:" />
+		<TextBlock 
+            HorizontalAlignment="Left"
+            Width="248" 
+            Height="24" 
+            Text="{Binding ElementName=lbBook, 
+            Path=SelectedValue}" 
+            x:Name="tbSelectedBook"/>
+	</StackPanel>
+</Window>

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<colors xmlns="">
+	<color name="red" primary="true"/>
+	<color name="orange" primary="false"/>
+	<color name="blue" primary="true"/>
+	<color name="purple" primary="false"/>
+	<color name="yellow" primary="true"/>
+	<color name="green" primary="false"/>
+</colors>

@@ -1,0 +1,42 @@
+﻿<Window x:Class="DataBindingWPF.ObjectBinding"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:svc="clr-namespace:DataBindingWPF"
+    xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+	Title="DataBindingWPF" Height="300" Width="300"
+    >
+	<StackPanel>
+		<StackPanel.Resources>
+			<ObjectDataProvider x:Key="persons" ObjectType="{x:Type svc:PersonService}" MethodName="GetPersonList" ></ObjectDataProvider>
+			<DataTemplate x:Key="personLayout" DataType="Person">
+				<StackPanel Orientation="Vertical">
+					<TextBlock Text="{Binding Path=FullName}" FontWeight="Bold" Foreground="Blue"></TextBlock>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{Binding Path=Title}"></TextBlock>
+						<TextBlock Text=", "></TextBlock>
+						<TextBlock Text="{Binding Path=City}"></TextBlock>
+					</StackPanel>
+				</StackPanel>
+			</DataTemplate>
+			<CollectionViewSource x:Key="personView" Source="{Binding Source={StaticResource persons}}">
+				<CollectionViewSource.SortDescriptions>
+					<ComponentModel:SortDescription PropertyName="City" Direction="Ascending" />
+					<ComponentModel:SortDescription PropertyName="FullName" Direction="Descending" />
+				</CollectionViewSource.SortDescriptions>
+			</CollectionViewSource>
+		</StackPanel.Resources>
+		<TextBlock></TextBlock>
+		<ListBox x:Name="lbPersons" ItemsSource="{Binding Source={StaticResource personView}}" ItemTemplate="{DynamicResource personLayout}" IsSynchronizedWithCurrentItem="True"/>
+		<!--<StackPanel>
+			<TextBlock Text="{Binding Source={StaticResource personView}, Path=FullName}"></TextBlock>
+			<TextBlock Text="{Binding Source={StaticResource personView}, Path=Title}"></TextBlock>
+			<TextBlock Text="{Binding Source={StaticResource personView}, Path=City}"></TextBlock>
+		</StackPanel>
+		<StackPanel DataContext="{Binding Source={StaticResource personView}}" >
+			<TextBlock Text="{Binding Path=FullName}"></TextBlock>
+			<TextBlock Text="{Binding Path=Title}"></TextBlock>
+			<TextBlock Text="{Binding Path=City}"></TextBlock>
+		</StackPanel>-->
+	</StackPanel>
+</Window>
+
